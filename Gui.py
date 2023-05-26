@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import *
 import pymssql as sql
 
 
@@ -13,7 +12,31 @@ password_i = tk.Entry(window)
 nome_mod= tk.Entry(window)
 cognome_mod= tk.Entry(window)
 
+
+def users():
+
+    username_label = tk.Label(root, text="Gestione Utenti:")
+    username_label.grid(column=3, row=0, sticky=tk.N, padx=5, pady=5)
     
+    frame = ttk.Frame(window)
+    frame.columnconfigure(index = 4, weight=1)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM utenteGUI')
+    usr = cursor.fetchall
+
+    for i in enumerate(usr):
+        utenti = tk.Label(window)
+        utenti.grid()
+        mod = tk.Button(window)
+        mod.grid()
+        delu= tk.Button(window)
+        delu.grid()
+        
+
+    add= tk.Button(window)
+    add.grid(column=3, row=0, sticky= tk.NE, padx=5, pady=5)
+    
+
 def InsertUsers():
     window2 = Tk()
     window2.title('Inserisci Dati')
@@ -37,10 +60,9 @@ def InsertUsers():
 
 
     Button(window2, text='Submit',width=20,bg='brown',fg='white').place(x=180,y=380) 
-
     cursor = conn.cursor()
     # inserimento dati nella tabella
-    cursor.execute("INSERT INTO utenteGUI VALUES (%(nome_i)s, %(cognome_i)s, %(password_i)s)")
+    cursor.execute("INSERT INTO utenteGUI(nome, cognome,pswrd) VALUES ('%(nome_i)s', '%(cognome_i)s', '%(password_i)s')")
     conn.commit()
 
     conn.close()
@@ -50,18 +72,18 @@ myButton.pack()
 def DeleteUsers():
     cursor = conn.cursor()
     # cancella dati nella tabella
-    cursor.execute("DELETE FROM utenteGUI WHERE nome=%(nome_i)s AND cognome=%(cognome_i)s")
+    cursor.execute("DELETE FROM utenteGUI WHERE nome='%(nome_i)s' AND cognome='%(cognome_i)s'")
     conn.commit()
 
 def modUsers():
     cursor = conn.cursor()
     # modifica dati nella tabella
-    cursor.execute("UPDATE TABLE utenteGUI SET nome=%(nome_mod)s, cognome=%(cognome_mod)s WHERE cognome=%(cognome_i)s AND nome=%(nome_i)s")
+    cursor.execute("UPDATE TABLE utenteGUI SET nome='%(nome_mod)s', cognome='%(cognome_mod)s' WHERE cognome='%(cognome_i)s' AND nome='%(nome_i)s'")
     conn.commit()
 
 def searchUsers():
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM utenteGUI WHERE nome LIKE '%()s%'")
+    cursor.execute("SELECT * FROM utenteGUI WHERE nome LIKE '%(nome_i)s%' ANMD cognome LIKE '%(cognome_i)s'")
     conn.commit()
 
 
