@@ -1,3 +1,6 @@
+#Gruppo:  Fabrizio Giurato, Gabriel Goycochea, Alessandro Tag
+
+
 import tkinter as tk
 import pymssql as sql
 
@@ -18,7 +21,7 @@ def users():
     username_label = tk.Label(root, text="Gestione Utenti:")
     username_label.grid(column=3, row=0, sticky=tk.N, padx=5, pady=5)
     
-    frame = ttk.Frame(window)
+    frame = tk.Frame(window)
     frame.columnconfigure(index = 4, weight=1)
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM utenteGUI')
